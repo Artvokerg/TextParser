@@ -49,6 +49,10 @@
             this.labelTranslatedWord = new System.Windows.Forms.Label();
             this.labelEngWord = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.buttonreadEngTranslatedFromFile = new System.Windows.Forms.Button();
+            this.buttonWriteEngTranslatedToFile = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -74,10 +78,10 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(210, 76);
+            this.tabControl1.Location = new System.Drawing.Point(100, 42);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(457, 251);
+            this.tabControl1.Size = new System.Drawing.Size(596, 359);
             this.tabControl1.TabIndex = 1;
             // 
             // tabPage1
@@ -146,6 +150,10 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.buttonWriteEngTranslatedToFile);
+            this.tabPage2.Controls.Add(this.buttonreadEngTranslatedFromFile);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.GetRusWordsButton);
             this.tabPage2.Controls.Add(this.label4);
@@ -153,7 +161,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(449, 223);
+            this.tabPage2.Size = new System.Drawing.Size(588, 331);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Добавление перевода";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -258,6 +266,44 @@
             this.labelEngWord.TabIndex = 0;
             this.labelEngWord.Text = "label6";
             // 
+            // buttonreadEngTranslatedFromFile
+            // 
+            this.buttonreadEngTranslatedFromFile.Location = new System.Drawing.Point(33, 192);
+            this.buttonreadEngTranslatedFromFile.Name = "buttonreadEngTranslatedFromFile";
+            this.buttonreadEngTranslatedFromFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonreadEngTranslatedFromFile.TabIndex = 4;
+            this.buttonreadEngTranslatedFromFile.Text = "button1";
+            this.buttonreadEngTranslatedFromFile.UseVisualStyleBackColor = true;
+            this.buttonreadEngTranslatedFromFile.Click += new System.EventHandler(this.buttonreadEngTranslatedFromFile_Click);
+            // 
+            // buttonWriteEngTranslatedToFile
+            // 
+            this.buttonWriteEngTranslatedToFile.Location = new System.Drawing.Point(33, 262);
+            this.buttonWriteEngTranslatedToFile.Name = "buttonWriteEngTranslatedToFile";
+            this.buttonWriteEngTranslatedToFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonWriteEngTranslatedToFile.TabIndex = 5;
+            this.buttonWriteEngTranslatedToFile.Text = "button2";
+            this.buttonWriteEngTranslatedToFile.UseVisualStyleBackColor = true;
+            this.buttonWriteEngTranslatedToFile.Click += new System.EventHandler(this.buttonWriteEngTranslatedToFile_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(35, 159);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(246, 15);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "загрузить готовый файл оригинал-перевод";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(35, 234);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(204, 15);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Сохранить файл оригинал-перевод";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -300,5 +346,9 @@
         private Label labelCountInText;
         private Label labelTranslatedWord;
         private Label labelEngWord;
+        private Label label7;
+        private Label label6;
+        private Button buttonWriteEngTranslatedToFile;
+        private Button buttonreadEngTranslatedFromFile;
     }
 }

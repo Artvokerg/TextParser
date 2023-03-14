@@ -50,12 +50,21 @@ namespace TextParser.Controllers
         {
             Dictionary<EngWord, string> translatedWords = new();
             IEnumerable<string> lines = m_fileController.GetAllLinesFromFile(path);
-
-            foreach(string line in lines)
+            
+            for (int i = 0; i < lines.Count(); i += 4)
             {
-                EngWord engWord = new EngWord();
-                engWord.Word = line;
+                EngWord engWord = new();
+                string translatedWord;
+
+                engWord.Word = lines.ElementAt(i);
+                translatedWord = lines.ElementAt(i + 1);
+                engWord.CountInText = int.Parse(lines.ElementAt(i + 2));
+                engWord.IsKnown = bool.Parse(lines.ElementAt(i + 3));
+
+                translatedWords.Add(engWord, translatedWord);
             }
+
+            m_translatedWordsModel.SetTranslatedWords(translatedWords);
         }
 
         public KeyValuePair<EngWord, string> GetTranslatedWord(int index)

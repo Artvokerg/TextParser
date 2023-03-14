@@ -84,5 +84,25 @@ namespace TextParser
         {
             m_showWordsMediator.GetNextWord();
         }
+
+        private void buttonreadEngTranslatedFromFile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            m_translatedWordsController.ReadTranslatedWordsFromFile(openFileDialog.FileName);
+        }
+
+        private void buttonWriteEngTranslatedToFile_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            m_translatedWordsController.WriteTranslatedWordsToFile(saveFileDialog.FileName);
+        }
     }
 }
