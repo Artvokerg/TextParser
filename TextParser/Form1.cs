@@ -1,4 +1,5 @@
 using TextParser.Controllers;
+using TextParser.DAO;
 using TextParser.Forms;
 
 namespace TextParser
@@ -6,7 +7,7 @@ namespace TextParser
     public partial class Form1 : Form
     {
         private EngTextParsController m_engTextParsController;
-        private TranslatedWordsController m_translatedWordsController;
+        private EngTranslatedPairsController m_engTranslatedPairsController;
         private ShowWordsMediator m_showWordsMediator;
 
         public Form1()
@@ -14,10 +15,12 @@ namespace TextParser
             InitializeComponent();
 
             FileController fileController = new FileController();
-            EngWordsModel engWordsModel = new EngWordsModel();
-            m_engTextParsController = new EngTextParsController(fileController, engWordsModel);
-            m_translatedWordsController = new TranslatedWordsController(fileController, null, engWordsModel);
-            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_translatedWordsController);
+            IEngWordsDao engWordsDao = new EngWordsDao();
+            IEngTranslatedPairsDao engTranslatedPairsDao = new EngTranslatedPairsDao();
+
+            m_engTextParsController = new EngTextParsController(fileController, engWordsDao);
+            m_engTranslatedPairsController = new EngTranslatedPairsController(fileController, engTranslatedPairsDao, engWordsDao);
+            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_engTranslatedPairsController);
         }
 
         private void openFileButton_Click(object sender, EventArgs e)
@@ -72,7 +75,7 @@ namespace TextParser
                 return;
             }
 
-            m_translatedWordsController.GetOnlyTranslatedWordsFromFile(openFileDialog.FileName);
+            m_engTranslatedPairsController.GetOnlyTranslatedWordsFromFile(openFileDialog.FileName);
         }
 
         private void buttonPrevWord_Click(object sender, EventArgs e)
@@ -92,7 +95,7 @@ namespace TextParser
                 return;
             }
 
-            m_translatedWordsController.ReadTranslatedWordsFromFile(openFileDialog.FileName);
+            m_engTranslatedPairsController.ReadEngTranslatedPairsFromFile(openFileDialog.FileName);
         }
 
         private void buttonWriteEngTranslatedToFile_Click(object sender, EventArgs e)
@@ -102,7 +105,7 @@ namespace TextParser
                 return;
             }
 
-            m_translatedWordsController.WriteTranslatedWordsToFile(saveFileDialog.FileName);
+            m_engTranslatedPairsController.WriteEngTranslatedPairsToFile(saveFileDialog.FileName);
         }
     }
 }

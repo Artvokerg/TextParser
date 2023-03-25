@@ -1,21 +1,7 @@
-﻿namespace TextParser
+﻿namespace TextParser.DAO
 {
-    internal class EngWord
+    internal class EngWordsDao : IEngWordsDao
     {
-        public string Word;
-
-        public int CountInText;
-        public bool IsKnown = false;
-
-        public override int GetHashCode()
-        {
-            return Word.GetHashCode();
-        }
-    }
-
-    internal class EngWordsModel
-    {
-        //private Dictionary<string, int> engWords;
         private HashSet<EngWord> engWords;
 
         public void SetEngWords(HashSet<EngWord> engWords)
@@ -44,7 +30,7 @@
         {
             return this.engWords;
         }
-        
+
         public IEnumerable<EngWord> GetEngWordsOrderByCountInText()
         {
             return this.engWords.OrderBy(pair => pair.CountInText).Reverse();

@@ -1,21 +1,22 @@
 ﻿using System.Text.RegularExpressions;
+using TextParser.DAO;
 
 namespace TextParser.Controllers
 {
     internal class EngTextParsController
     {
         private FileController m_fileController;
-        private EngWordsModel m_engWordsModel;
+        private IEngWordsDao m_engWordsDao;
 
-        public EngTextParsController(FileController fileController = null, EngWordsModel engWordsModel = null)
+        public EngTextParsController(FileController fileController, IEngWordsDao engWordsDao)
         {
-            m_fileController = fileController ?? new FileController();
-            m_engWordsModel = engWordsModel ?? new EngWordsModel();
+            m_fileController = fileController;
+            m_engWordsDao = engWordsDao;
         }
 
         public void GenerateFileEngWordsAndCount(string path)
         {
-            var lines = m_engWordsModel.GetEngWordsOrderByCountInText()
+            var lines = m_engWordsDao.GetEngWordsOrderByCountInText()
                 .Select((word) => word.Word + ";" + word.CountInText.ToString());
 
             m_fileController.WriteLinesToFile(path, lines);
@@ -23,7 +24,7 @@ namespace TextParser.Controllers
 
         public void GenerateFileOnlyEngWords(string path)
         {
-            var lines = m_engWordsModel.GetEngWordsOrderByCountInText()
+            var lines = m_engWordsDao.GetEngWordsOrderByCountInText()
                 .Select((word) => word.Word);
 
             m_fileController.WriteLinesToFile(path, lines);
@@ -33,7 +34,7 @@ namespace TextParser.Controllers
         {
             var allLines = m_fileController.GetAllLinesFromFile(path);
             Dictionary<string, int> engWords = ParseEngWords(allLines);
-            m_engWordsModel.SetEngWords(engWords);
+            m_engWordsDao.SetEngWords(engWords);
         }
 
         public void ReadGeneratedFileAndSetEngWordsToModel(string path)
@@ -51,12 +52,12 @@ namespace TextParser.Controllers
                 engWords.Add(engWord);
             }
 
-            m_engWordsModel.SetEngWords(engWords);
+            m_engWordsDao.SetEngWords(engWords);
         }
 
         public HashSet<EngWord> GetAllEngWords()
         {
-            return m_engWordsModel.GetEngWords();
+            return m_engWordsDao.GetEngWords();
         }
 
         private Dictionary<string, int> ParseEngWords(IEnumerable<string> lines)

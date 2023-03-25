@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextParser.Controllers;
+using TextParser.Models;
 
 namespace TextParser.Forms
 {
@@ -15,9 +16,9 @@ namespace TextParser.Forms
 
         private int currentWordIndex = 0;
 
-        private TranslatedWordsController m_translatedWordsController;
+        private EngTranslatedPairsController m_translatedWordsController;
 
-        public ShowWordsMediator(Label labelCountInText, Label labelTranslatedWord, Label labelEngWord, TranslatedWordsController translatedWordsController)
+        public ShowWordsMediator(Label labelCountInText, Label labelTranslatedWord, Label labelEngWord, EngTranslatedPairsController translatedWordsController)
         {
             this.labelCountInText = labelCountInText;
             this.labelTranslatedWord = labelTranslatedWord;
@@ -39,11 +40,11 @@ namespace TextParser.Forms
 
         private void SetCurrentValues()
         {
-            KeyValuePair<EngWord, string> translatedWord = m_translatedWordsController.GetTranslatedWord(currentWordIndex);
+            EngTranslatedPair engTranslatedPair = m_translatedWordsController.GetEngTranslatedPairs(currentWordIndex);
 
-            this.labelEngWord.Text = translatedWord.Key.Word;
-            this.labelTranslatedWord.Text = translatedWord.Value;
-            this.labelCountInText.Text = translatedWord.Key.CountInText.ToString();
+            this.labelEngWord.Text = engTranslatedPair.engWord.Word;
+            this.labelTranslatedWord.Text = engTranslatedPair.translatedWord;
+            this.labelCountInText.Text = engTranslatedPair.engWord.CountInText.ToString();
         }
     }
 }
