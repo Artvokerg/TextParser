@@ -38,21 +38,24 @@
             this.createFileEngWordsButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.buttonWriteEngTranslatedToFile = new System.Windows.Forms.Button();
+            this.buttonreadEngTranslatedFromFile = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.GetRusWordsButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.SetEngTextFileButton = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.labelCurrentIndex = new System.Windows.Forms.Label();
+            this.checkBoxShowOnlyUnknownWords = new System.Windows.Forms.CheckBox();
+            this.checkBoxIsKnownWord = new System.Windows.Forms.CheckBox();
             this.buttonNextWord = new System.Windows.Forms.Button();
             this.buttonPrevWord = new System.Windows.Forms.Button();
             this.labelCountInText = new System.Windows.Forms.Label();
             this.labelTranslatedWord = new System.Windows.Forms.Label();
             this.labelEngWord = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.buttonreadEngTranslatedFromFile = new System.Windows.Forms.Button();
-            this.buttonWriteEngTranslatedToFile = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -83,6 +86,8 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(596, 359);
             this.tabControl1.TabIndex = 1;
+            this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.tabControl1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             // 
             // tabPage1
             // 
@@ -95,7 +100,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(449, 223);
+            this.tabPage1.Size = new System.Drawing.Size(588, 331);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Парсинг исходника";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -166,6 +171,44 @@
             this.tabPage2.Text = "Добавление перевода";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(35, 234);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(204, 15);
+            this.label7.TabIndex = 7;
+            this.label7.Text = "Сохранить файл оригинал-перевод";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(35, 159);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(246, 15);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "загрузить готовый файл оригинал-перевод";
+            // 
+            // buttonWriteEngTranslatedToFile
+            // 
+            this.buttonWriteEngTranslatedToFile.Location = new System.Drawing.Point(33, 262);
+            this.buttonWriteEngTranslatedToFile.Name = "buttonWriteEngTranslatedToFile";
+            this.buttonWriteEngTranslatedToFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonWriteEngTranslatedToFile.TabIndex = 5;
+            this.buttonWriteEngTranslatedToFile.Text = "button2";
+            this.buttonWriteEngTranslatedToFile.UseVisualStyleBackColor = true;
+            this.buttonWriteEngTranslatedToFile.Click += new System.EventHandler(this.buttonWriteEngTranslatedToFile_Click);
+            // 
+            // buttonreadEngTranslatedFromFile
+            // 
+            this.buttonreadEngTranslatedFromFile.Location = new System.Drawing.Point(33, 192);
+            this.buttonreadEngTranslatedFromFile.Name = "buttonreadEngTranslatedFromFile";
+            this.buttonreadEngTranslatedFromFile.Size = new System.Drawing.Size(75, 23);
+            this.buttonreadEngTranslatedFromFile.TabIndex = 4;
+            this.buttonreadEngTranslatedFromFile.Text = "button1";
+            this.buttonreadEngTranslatedFromFile.UseVisualStyleBackColor = true;
+            this.buttonreadEngTranslatedFromFile.Click += new System.EventHandler(this.buttonreadEngTranslatedFromFile_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -206,6 +249,9 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.labelCurrentIndex);
+            this.tabPage3.Controls.Add(this.checkBoxShowOnlyUnknownWords);
+            this.tabPage3.Controls.Add(this.checkBoxIsKnownWord);
             this.tabPage3.Controls.Add(this.buttonNextWord);
             this.tabPage3.Controls.Add(this.buttonPrevWord);
             this.tabPage3.Controls.Add(this.labelCountInText);
@@ -214,95 +260,90 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(449, 223);
+            this.tabPage3.Size = new System.Drawing.Size(588, 331);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // labelCurrentIndex
+            // 
+            this.labelCurrentIndex.AutoSize = true;
+            this.labelCurrentIndex.Location = new System.Drawing.Point(65, 143);
+            this.labelCurrentIndex.Name = "labelCurrentIndex";
+            this.labelCurrentIndex.Size = new System.Drawing.Size(24, 15);
+            this.labelCurrentIndex.TabIndex = 6;
+            this.labelCurrentIndex.Text = "0/0";
+            // 
+            // checkBoxShowOnlyUnknownWords
+            // 
+            this.checkBoxShowOnlyUnknownWords.AutoSize = true;
+            this.checkBoxShowOnlyUnknownWords.Checked = true;
+            this.checkBoxShowOnlyUnknownWords.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxShowOnlyUnknownWords.Location = new System.Drawing.Point(63, 280);
+            this.checkBoxShowOnlyUnknownWords.Name = "checkBoxShowOnlyUnknownWords";
+            this.checkBoxShowOnlyUnknownWords.Size = new System.Drawing.Size(238, 19);
+            this.checkBoxShowOnlyUnknownWords.TabIndex = 2;
+            this.checkBoxShowOnlyUnknownWords.Text = "Показывать только незнакомые слова";
+            this.checkBoxShowOnlyUnknownWords.UseVisualStyleBackColor = true;
+            this.checkBoxShowOnlyUnknownWords.Click += new System.EventHandler(this.checkBoxShowOnlyUnknownWords_Click);
+            // 
+            // checkBoxIsKnownWord
+            // 
+            this.checkBoxIsKnownWord.AutoSize = true;
+            this.checkBoxIsKnownWord.Location = new System.Drawing.Point(65, 178);
+            this.checkBoxIsKnownWord.Name = "checkBoxIsKnownWord";
+            this.checkBoxIsKnownWord.Size = new System.Drawing.Size(92, 19);
+            this.checkBoxIsKnownWord.TabIndex = 5;
+            this.checkBoxIsKnownWord.Text = "Знаю слово";
+            this.checkBoxIsKnownWord.UseVisualStyleBackColor = true;
+            this.checkBoxIsKnownWord.Click += new System.EventHandler(this.checkBoxIsKnownWord_CheckedChanged);
+            // 
             // buttonNextWord
             // 
-            this.buttonNextWord.Location = new System.Drawing.Point(199, 167);
+            this.buttonNextWord.Location = new System.Drawing.Point(199, 219);
             this.buttonNextWord.Name = "buttonNextWord";
             this.buttonNextWord.Size = new System.Drawing.Size(75, 23);
             this.buttonNextWord.TabIndex = 4;
-            this.buttonNextWord.Text = "button1";
+            this.buttonNextWord.Text = "Вперед";
             this.buttonNextWord.UseVisualStyleBackColor = true;
             this.buttonNextWord.Click += new System.EventHandler(this.buttonNextWord_Click);
             // 
             // buttonPrevWord
             // 
-            this.buttonPrevWord.Location = new System.Drawing.Point(78, 167);
+            this.buttonPrevWord.Location = new System.Drawing.Point(78, 219);
             this.buttonPrevWord.Name = "buttonPrevWord";
             this.buttonPrevWord.Size = new System.Drawing.Size(75, 23);
             this.buttonPrevWord.TabIndex = 3;
-            this.buttonPrevWord.Text = "button1";
+            this.buttonPrevWord.Text = "Назад";
             this.buttonPrevWord.UseVisualStyleBackColor = true;
             this.buttonPrevWord.Click += new System.EventHandler(this.buttonPrevWord_Click);
             // 
             // labelCountInText
             // 
             this.labelCountInText.AutoSize = true;
-            this.labelCountInText.Location = new System.Drawing.Point(68, 119);
+            this.labelCountInText.Location = new System.Drawing.Point(65, 113);
             this.labelCountInText.Name = "labelCountInText";
-            this.labelCountInText.Size = new System.Drawing.Size(38, 15);
+            this.labelCountInText.Size = new System.Drawing.Size(46, 15);
             this.labelCountInText.TabIndex = 2;
-            this.labelCountInText.Text = "label6";
+            this.labelCountInText.Text = "Кол-во";
             // 
             // labelTranslatedWord
             // 
             this.labelTranslatedWord.AutoSize = true;
-            this.labelTranslatedWord.Location = new System.Drawing.Point(65, 78);
+            this.labelTranslatedWord.Location = new System.Drawing.Point(65, 77);
             this.labelTranslatedWord.Name = "labelTranslatedWord";
-            this.labelTranslatedWord.Size = new System.Drawing.Size(38, 15);
+            this.labelTranslatedWord.Size = new System.Drawing.Size(54, 15);
             this.labelTranslatedWord.TabIndex = 1;
-            this.labelTranslatedWord.Text = "label6";
+            this.labelTranslatedWord.Text = "Перевод";
             // 
             // labelEngWord
             // 
             this.labelEngWord.AutoSize = true;
-            this.labelEngWord.Location = new System.Drawing.Point(63, 36);
+            this.labelEngWord.Location = new System.Drawing.Point(65, 39);
             this.labelEngWord.Name = "labelEngWord";
-            this.labelEngWord.Size = new System.Drawing.Size(38, 15);
+            this.labelEngWord.Size = new System.Drawing.Size(62, 15);
             this.labelEngWord.TabIndex = 0;
-            this.labelEngWord.Text = "label6";
-            // 
-            // buttonreadEngTranslatedFromFile
-            // 
-            this.buttonreadEngTranslatedFromFile.Location = new System.Drawing.Point(33, 192);
-            this.buttonreadEngTranslatedFromFile.Name = "buttonreadEngTranslatedFromFile";
-            this.buttonreadEngTranslatedFromFile.Size = new System.Drawing.Size(75, 23);
-            this.buttonreadEngTranslatedFromFile.TabIndex = 4;
-            this.buttonreadEngTranslatedFromFile.Text = "button1";
-            this.buttonreadEngTranslatedFromFile.UseVisualStyleBackColor = true;
-            this.buttonreadEngTranslatedFromFile.Click += new System.EventHandler(this.buttonreadEngTranslatedFromFile_Click);
-            // 
-            // buttonWriteEngTranslatedToFile
-            // 
-            this.buttonWriteEngTranslatedToFile.Location = new System.Drawing.Point(33, 262);
-            this.buttonWriteEngTranslatedToFile.Name = "buttonWriteEngTranslatedToFile";
-            this.buttonWriteEngTranslatedToFile.Size = new System.Drawing.Size(75, 23);
-            this.buttonWriteEngTranslatedToFile.TabIndex = 5;
-            this.buttonWriteEngTranslatedToFile.Text = "button2";
-            this.buttonWriteEngTranslatedToFile.UseVisualStyleBackColor = true;
-            this.buttonWriteEngTranslatedToFile.Click += new System.EventHandler(this.buttonWriteEngTranslatedToFile_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(35, 159);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(246, 15);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "загрузить готовый файл оригинал-перевод";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(35, 234);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(204, 15);
-            this.label7.TabIndex = 7;
-            this.label7.Text = "Сохранить файл оригинал-перевод";
+            this.labelEngWord.Text = "Оригинал";
             // 
             // Form1
             // 
@@ -350,5 +391,8 @@
         private Label label6;
         private Button buttonWriteEngTranslatedToFile;
         private Button buttonreadEngTranslatedFromFile;
+        private CheckBox checkBoxIsKnownWord;
+        private CheckBox checkBoxShowOnlyUnknownWords;
+        private Label labelCurrentIndex;
     }
 }

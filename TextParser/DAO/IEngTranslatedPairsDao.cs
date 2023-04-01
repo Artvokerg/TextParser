@@ -6,5 +6,7 @@ namespace TextParser.DAO
     {
         void SetEngTranslatedPairs(HashSet<EngTranslatedPair> translatedWords);
         HashSet<EngTranslatedPair> GetEngTranslatedPairs();
+        HashSet<EngTranslatedPair> GetOnlyUnknownEngTranslatedPairs();
+        void SetKnownWordValue(string word, bool isKnown);
     }
 }

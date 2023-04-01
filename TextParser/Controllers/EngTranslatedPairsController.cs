@@ -72,9 +72,34 @@ namespace TextParser.Controllers
             m_engTranslatedPairsDao.SetEngTranslatedPairs(engTranslatedPairs);
         }
 
-        public EngTranslatedPair GetEngTranslatedPairs(int index)
+        public EngTranslatedPair GetEngTranslatedPair(int index)
         {
             return m_engTranslatedPairsDao.GetEngTranslatedPairs().ElementAt(index);
+        }
+
+        public EngTranslatedPair GetOnlyUnknownEngTranslatedPair(int index)
+        {
+            return m_engTranslatedPairsDao.GetOnlyUnknownEngTranslatedPairs().ElementAt(index);
+        }
+
+        public void IsKnownValueWasChanged(int index, bool isknown)
+        {
+            m_engTranslatedPairsDao.GetEngTranslatedPairs().ElementAt(index).engWord.IsKnown = isknown;
+        }
+
+        public void IsKnownValueWasChanged(string wordKey, bool isknown)
+        {
+            m_engTranslatedPairsDao.SetKnownWordValue(wordKey, isknown);
+        }
+
+        public int GetEngTranslatedPairsCount()
+        {
+            return m_engTranslatedPairsDao.GetEngTranslatedPairs().Count();
+        }
+
+        public int GetOnlyUnknownEngTranslatedPairsCount()
+        {
+            return m_engTranslatedPairsDao.GetOnlyUnknownEngTranslatedPairs().Count();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace TextParser
 
             m_engTextParsController = new EngTextParsController(fileController, engWordsDao);
             m_engTranslatedPairsController = new EngTranslatedPairsController(fileController, engTranslatedPairsDao, engWordsDao);
-            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_engTranslatedPairsController);
+            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_engTranslatedPairsController, checkBoxIsKnownWord, labelCurrentIndex);
         }
 
         private void openFileButton_Click(object sender, EventArgs e)
@@ -106,6 +106,26 @@ namespace TextParser
             }
 
             m_engTranslatedPairsController.WriteEngTranslatedPairsToFile(saveFileDialog.FileName);
+        }
+
+        private void checkBoxIsKnownWord_CheckedChanged(object sender, EventArgs e)
+        {
+            m_showWordsMediator.CheckBoxIsKnownWordChanged();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            m_showWordsMediator.KeyDown(e.KeyData);
+        }
+
+        private void checkBoxShowOnlyUnknownWords_Click(object sender, EventArgs e)
+        {
+            m_showWordsMediator.ShouldShowOnlyUnknownWords(checkBoxShowOnlyUnknownWords.Checked);
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            m_showWordsMediator.KeyUp(e.KeyData);
         }
     }
 }

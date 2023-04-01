@@ -15,5 +15,22 @@ namespace TextParser.DAO
         {
             return this.engTranslatedPairs;
         }
+
+        public HashSet<EngTranslatedPair> GetOnlyUnknownEngTranslatedPairs()
+        {
+            return this.engTranslatedPairs.Where(pair => pair.engWord.IsKnown == false).ToHashSet();
+        }
+
+        public void SetKnownWordValue(string word, bool isKnown)
+        {
+            foreach (EngTranslatedPair pair in this.engTranslatedPairs)
+            {
+                if (pair.engWord.Word == word)
+                {
+                    pair.engWord.IsKnown = isKnown;
+                    return;
+                }
+            }
+        }
     }
 }
