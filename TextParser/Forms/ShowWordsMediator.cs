@@ -113,10 +113,13 @@ namespace TextParser.Forms
         {
             switch (key)
             {
-                case Keys.F:
+                case Keys.NumPad1:
+                    GetPrevWord();
+                    break;
+                case Keys.NumPad3:
                     GetNextWord();
                     break;
-                case Keys.Space:
+                case Keys.ControlKey:
                     checkBoxIsKnownWord.Checked = !checkBoxIsKnownWord.Checked;
                     CheckBoxIsKnownWordChanged();
                     break;
