@@ -125,5 +125,10 @@ namespace TextParser.Forms
                     break;
             }
         }
+
+        public void ShowLastUnknownWord()
+        {
+
+        }
     }
 }

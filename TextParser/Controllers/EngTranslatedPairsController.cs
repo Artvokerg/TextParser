@@ -72,6 +72,38 @@ namespace TextParser.Controllers
             m_engTranslatedPairsDao.SetEngTranslatedPairs(engTranslatedPairs);
         }
 
+        //todo дописать метод если он нужен
+        /*public int GetLastKnownWordIndex(bool onlyUnknown)
+        {
+            HashSet<EngTranslatedPair> engTranslatedPairs = m_engTranslatedPairsDao.GetEngTranslatedPairs();
+            int lastKnownWordIndex = 0;
+            string lastKnownWord;
+
+            for (int i = 0;i < GetEngTranslatedPairsCount(); i++)
+            {
+                EngTranslatedPair wordsPair = GetEngTranslatedPair(i);
+                if (wordsPair.engWord.IsKnown)
+                {
+                    lastKnownWordIndex = i;
+                    lastKnownWord = wordsPair.engWord.Word;
+                }
+            }
+
+            if (!onlyUnknown)
+            {
+                return lastKnownWordIndex;
+            }
+
+            for (int i = 0; i < GetEngTranslatedPairsCount(onlyUnknown); i++)
+            {
+                EngTranslatedPair wordsPair = GetEngTranslatedPair(i, onlyUnknown);
+                if (wordsPair.engWord.Word == lastKnownWord)
+                {
+                    lastKnownWordIndex = i;
+                    lastKnownWord = wordsPair.engWord.Word;
+                }
+            }
+        }*/
         public EngTranslatedPair GetEngTranslatedPair(int index)
         {
             return m_engTranslatedPairsDao.GetEngTranslatedPairs().ElementAt(index);
@@ -90,6 +122,16 @@ namespace TextParser.Controllers
         public void IsKnownValueWasChanged(string wordKey, bool isknown)
         {
             m_engTranslatedPairsDao.SetKnownWordValue(wordKey, isknown);
+        }
+
+        public int GetEngTranslatedPairsCount(bool onlyUnknown)
+        {
+            if (onlyUnknown)
+            {
+                return m_engTranslatedPairsDao.GetOnlyUnknownEngTranslatedPairs().Count();
+            }
+
+            return m_engTranslatedPairsDao.GetEngTranslatedPairs().Count();
         }
 
         public int GetEngTranslatedPairsCount()

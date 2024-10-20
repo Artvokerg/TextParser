@@ -127,5 +127,10 @@ namespace TextParser
         {
             m_showWordsMediator.KeyUp(e.KeyData);
         }
+
+        private void buttonToLastUnknown_Click(object sender, EventArgs e)
+        {
+            m_showWordsMediator.ShowLastUnknownWord();
+        }
     }
 }
