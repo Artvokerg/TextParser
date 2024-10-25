@@ -17,12 +17,17 @@ namespace TextParser.Forms
 
         private EngTranslatedPairsController m_engTranslatedPairsController;
 
+        Button saveFileOnlyEngWordsButton;
+        Button createFileEngWordsButton;
+
         public ShowWordsMediator(Label labelCountInText,
             Label labelTranslatedWord,
             Label labelEngWord,
             EngTranslatedPairsController engTranslatedPairsController,
             CheckBox checkBoxIsKnownWord,
-            Label labelCurrentIndex)
+            Label labelCurrentIndex,
+            Button saveFileOnlyEngWordsButton,
+            Button createFileEngWordsButton)
         {
             this.labelCountInText = labelCountInText;
             this.labelTranslatedWord = labelTranslatedWord;
@@ -30,6 +35,8 @@ namespace TextParser.Forms
             this.m_engTranslatedPairsController = engTranslatedPairsController;
             this.checkBoxIsKnownWord = checkBoxIsKnownWord;
             this.labelCurrentIndex = labelCurrentIndex;
+            this.saveFileOnlyEngWordsButton = saveFileOnlyEngWordsButton;
+            this.createFileEngWordsButton = createFileEngWordsButton;
         }
 
         public void GetNextWord()
@@ -129,6 +136,12 @@ namespace TextParser.Forms
         public void ShowLastUnknownWord()
         {
 
+        }
+
+        public void SetEnableOriginFileButton()
+        {
+            saveFileOnlyEngWordsButton.Enabled = true;
+            createFileEngWordsButton.Enabled = true;
         }
     }
 }

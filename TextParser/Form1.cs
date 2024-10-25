@@ -20,7 +20,10 @@ namespace TextParser
 
             m_engTextParsController = new EngTextParsController(fileController, engWordsDao);
             m_engTranslatedPairsController = new EngTranslatedPairsController(fileController, engTranslatedPairsDao, engWordsDao);
-            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_engTranslatedPairsController, checkBoxIsKnownWord, labelCurrentIndex);
+            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_engTranslatedPairsController, checkBoxIsKnownWord, labelCurrentIndex, saveFileOnlyEngWordsButton, createFileEngWordsButton);
+
+            createFileEngWordsButton.Enabled = false;
+            saveFileOnlyEngWordsButton.Enabled = false;
         }
 
         private void openFileButton_Click(object sender, EventArgs e)
@@ -31,6 +34,7 @@ namespace TextParser
             }
 
             m_engTextParsController.ReadFileAndSetEngWordsToModel(openFileDialog.FileName);
+            m_showWordsMediator.SetEnableOriginFileButton();
         }
 
         private void label1_Click(object sender, EventArgs e)
