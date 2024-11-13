@@ -10,96 +10,131 @@ namespace TextParser.Forms
         private Label labelEngWord;
         private Label labelCurrentIndex;
         private CheckBox checkBoxIsKnownWord;
+        private Label knownWordsCountLabel;
 
-        private int currentWordIndex = 0;
 
-        private bool showOnlyUnknownWords = true;
+        private int m_currentWordIndex = 0;
 
-        private EngTranslatedPairsController m_engTranslatedPairsController;
+        private bool m_showOnlyUnknownWords = true;
+
+        private WordsInFileController m_wordsInFileController;
+        private WordsController m_wordsController;
+
 
         Button saveFileOnlyEngWordsButton;
-        Button createFileEngWordsButton;
 
         public ShowWordsMediator(Label labelCountInText,
             Label labelTranslatedWord,
             Label labelEngWord,
-            EngTranslatedPairsController engTranslatedPairsController,
+            WordsInFileController wordsInFileController,
             CheckBox checkBoxIsKnownWord,
             Label labelCurrentIndex,
             Button saveFileOnlyEngWordsButton,
-            Button createFileEngWordsButton)
+            Label knownWordsCountLabel,
+            WordsController wordsController)
         {
             this.labelCountInText = labelCountInText;
             this.labelTranslatedWord = labelTranslatedWord;
             this.labelEngWord = labelEngWord;
-            this.m_engTranslatedPairsController = engTranslatedPairsController;
             this.checkBoxIsKnownWord = checkBoxIsKnownWord;
             this.labelCurrentIndex = labelCurrentIndex;
             this.saveFileOnlyEngWordsButton = saveFileOnlyEngWordsButton;
-            this.createFileEngWordsButton = createFileEngWordsButton;
+            m_wordsInFileController = wordsInFileController;
+            this.knownWordsCountLabel = knownWordsCountLabel;
+            m_wordsController = wordsController;
         }
 
         public void GetNextWord()
         {
-            if (currentWordIndex + 1 < this.EngTranslatedPairCount())
+            if (m_currentWordIndex + 1 < this.WordsInFileCount())
             {
-                currentWordIndex++;
+                m_currentWordIndex++;
                 SetCurrentValues();
             }            
         }
 
         public void GetPrevWord()
         {
-            if (currentWordIndex > 0 )
+            if (m_currentWordIndex > 0 )
             {
-                currentWordIndex--;
+                m_currentWordIndex--;
                 SetCurrentValues();
             }            
         }
 
         public void CheckBoxIsKnownWordChanged()
         {
-            m_engTranslatedPairsController.IsKnownValueWasChanged(this.labelEngWord.Text, checkBoxIsKnownWord.Checked);
-            SetCurrentValues();
+            
+            m_wordsInFileController.SetKnownWordValue(this.labelEngWord.Text, checkBoxIsKnownWord.Checked);
+            SetNextWordAfterCheckBoxIsKnownChanged();
             // GetPrevWord();
+        }
+
+        private void SetNextWordAfterCheckBoxIsKnownChanged()
+        {
+            if (m_currentWordIndex == WordsInFileCount())
+            {
+                m_currentWordIndex--;
+            }
+
+            SetCurrentValues();
+        }
+
+        public void SetStartPosition()
+        {
+            m_currentWordIndex = 0;
+            SetCurrentValues();
         }
 
         private void SetCurrentValues()
         {
-            EngTranslatedPair engTranslatedPair = GetCurrentEngTranslatedPair();
+            WordInFile wordInFile = GetWordInFile();
 
-            this.labelEngWord.Text = engTranslatedPair.engWord.Word;
-            this.labelTranslatedWord.Text = engTranslatedPair.translatedWord;
-            this.labelCountInText.Text = engTranslatedPair.engWord.CountInText.ToString();
-            labelCurrentIndex.Text = currentWordIndex.ToString() + "/" + EngTranslatedPairCount().ToString();
-            checkBoxIsKnownWord.Checked = engTranslatedPair.engWord.IsKnown;
+            string SPOILER_WORD = "********";
+            int currentWordIndex = m_currentWordIndex + 1;
+
+            this.labelEngWord.Text = wordInFile.Word.EngWord;
+            this.labelTranslatedWord.Text = SPOILER_WORD;
+            this.labelCountInText.Text = wordInFile.CountInFile.ToString();
+            labelCurrentIndex.Text = $"{currentWordIndex} / {WordsInFileCount()}";
+            checkBoxIsKnownWord.Checked = wordInFile.Word.IsKnown;
+
+            knownWordsCountLabel.Text = $"Слов изучено: {m_wordsController.GetKnownWordsCount()}/{m_wordsController.GetAllWordsCount()}";
         }
 
-        private int EngTranslatedPairCount()
+        public void RemoveSpoiler()
         {
-            if (this.showOnlyUnknownWords)
-            {
-                return m_engTranslatedPairsController.GetOnlyUnknownEngTranslatedPairsCount();
-            }
+            WordInFile wordInFile = GetWordInFile();
 
-            return m_engTranslatedPairsController.GetEngTranslatedPairsCount();
+            this.labelTranslatedWord.Text = wordInFile.Word.RusWord;
         }
 
 
-        private EngTranslatedPair GetCurrentEngTranslatedPair()
+        private int WordsInFileCount()
         {
-            if (showOnlyUnknownWords)
+            if (this.m_showOnlyUnknownWords)
             {
-                return m_engTranslatedPairsController.GetOnlyUnknownEngTranslatedPair(currentWordIndex);
+                return m_wordsInFileController.GetOnlyUnknownWordsInFileCount();
             }
 
-            return m_engTranslatedPairsController.GetEngTranslatedPair(currentWordIndex);
+            return m_wordsInFileController.GetWordsInFileCount();
+        }
+
+
+        private WordInFile GetWordInFile()
+        {
+            if (m_showOnlyUnknownWords)
+            {
+                return m_wordsInFileController.GetOnlyUnknownWordInFile(m_currentWordIndex);
+            }
+
+            return m_wordsInFileController.GetWordInFile(m_currentWordIndex);
         }
 
         public void ShouldShowOnlyUnknownWords(bool showOnlyUnknownWords)
         {
-            this.showOnlyUnknownWords = showOnlyUnknownWords;
-            this.currentWordIndex = 0;
+            this.m_showOnlyUnknownWords = showOnlyUnknownWords;
+            this.m_currentWordIndex = 0;
             SetCurrentValues();
         }
 
@@ -141,7 +176,6 @@ namespace TextParser.Forms
         public void SetEnableOriginFileButton()
         {
             saveFileOnlyEngWordsButton.Enabled = true;
-            createFileEngWordsButton.Enabled = true;
         }
     }
 }

@@ -28,228 +28,55 @@
         /// </summary>
         private void InitializeComponent()
         {
-            openFileButton = new Button();
             openFileDialog = new OpenFileDialog();
-            tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
-            label3 = new Label();
-            saveFileOnlyEngWordsButton = new Button();
-            label2 = new Label();
-            createFileEngWordsButton = new Button();
-            label1 = new Label();
-            tabPage2 = new TabPage();
-            label7 = new Label();
-            label6 = new Label();
-            buttonWriteEngTranslatedToFile = new Button();
-            buttonreadEngTranslatedFromFile = new Button();
-            label5 = new Label();
-            GetRusWordsButton = new Button();
-            label4 = new Label();
-            SetEngTextFileButton = new Button();
-            tabPage3 = new TabPage();
-            labelCurrentIndex = new Label();
-            checkBoxShowOnlyUnknownWords = new CheckBox();
-            checkBoxIsKnownWord = new CheckBox();
-            buttonNextWord = new Button();
-            buttonPrevWord = new Button();
-            labelCountInText = new Label();
-            labelTranslatedWord = new Label();
-            labelEngWord = new Label();
+            saveAllWordsButton = new Button();
             saveFileDialog = new SaveFileDialog();
+            tabPage3 = new TabPage();
+            labelEngWord = new Label();
+            labelTranslatedWord = new Label();
+            labelCountInText = new Label();
+            buttonPrevWord = new Button();
+            buttonNextWord = new Button();
+            checkBoxIsKnownWord = new CheckBox();
+            checkBoxShowOnlyUnknownWords = new CheckBox();
+            labelCurrentIndex = new Label();
             buttonToLastUnknown = new Button();
-            tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
-            tabPage2.SuspendLayout();
+            filmsComboBox = new ComboBox();
+            knownWordsCountLabel = new Label();
+            tabPage1 = new TabPage();
+            openFileButton = new Button();
+            label1 = new Label();
+            saveFileOnlyEngWordsButton = new Button();
+            label3 = new Label();
+            WordsInFileNameTextBox = new TextBox();
+            label8 = new Label();
+            addNewWordsButton = new Button();
+            label9 = new Label();
+            tabControl1 = new TabControl();
             tabPage3.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabControl1.SuspendLayout();
             SuspendLayout();
-            // 
-            // openFileButton
-            // 
-            openFileButton.Location = new Point(29, 38);
-            openFileButton.Name = "openFileButton";
-            openFileButton.Size = new Size(75, 23);
-            openFileButton.TabIndex = 0;
-            openFileButton.Text = "button1";
-            openFileButton.UseVisualStyleBackColor = true;
-            openFileButton.Click += openFileButton_Click;
             // 
             // openFileDialog
             // 
             openFileDialog.FileName = "openFileDialog";
             // 
-            // tabControl1
+            // saveAllWordsButton
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Controls.Add(tabPage3);
-            tabControl1.Location = new Point(100, 42);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(596, 359);
-            tabControl1.TabIndex = 1;
-            tabControl1.KeyDown += Form1_KeyDown;
-            tabControl1.KeyUp += Form1_KeyUp;
-            // 
-            // tabPage1
-            // 
-            tabPage1.Controls.Add(label3);
-            tabPage1.Controls.Add(saveFileOnlyEngWordsButton);
-            tabPage1.Controls.Add(label2);
-            tabPage1.Controls.Add(createFileEngWordsButton);
-            tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(openFileButton);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(588, 331);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Парсинг исходника";
-            tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(31, 147);
-            label3.Name = "label3";
-            label3.Size = new Size(211, 15);
-            label3.TabIndex = 5;
-            label3.Text = "Генерация файла только со словами";
-            // 
-            // saveFileOnlyEngWordsButton
-            // 
-            saveFileOnlyEngWordsButton.Location = new Point(31, 165);
-            saveFileOnlyEngWordsButton.Name = "saveFileOnlyEngWordsButton";
-            saveFileOnlyEngWordsButton.Size = new Size(75, 23);
-            saveFileOnlyEngWordsButton.TabIndex = 4;
-            saveFileOnlyEngWordsButton.Text = "button1";
-            saveFileOnlyEngWordsButton.UseVisualStyleBackColor = true;
-            saveFileOnlyEngWordsButton.Click += saveFileOnlyEngWordsButton_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(31, 95);
-            label2.Name = "label2";
-            label2.Size = new Size(216, 15);
-            label2.TabIndex = 3;
-            label2.Text = "Сохранение файла со всеми словами";
-            // 
-            // createFileEngWordsButton
-            // 
-            createFileEngWordsButton.Location = new Point(31, 113);
-            createFileEngWordsButton.Name = "createFileEngWordsButton";
-            createFileEngWordsButton.Size = new Size(75, 23);
-            createFileEngWordsButton.TabIndex = 2;
-            createFileEngWordsButton.Text = "button1";
-            createFileEngWordsButton.UseVisualStyleBackColor = true;
-            createFileEngWordsButton.Click += createFileEngWordsButton_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(29, 20);
-            label1.Name = "label1";
-            label1.Size = new Size(153, 15);
-            label1.TabIndex = 1;
-            label1.Text = "Парсинг исходного файла";
-            label1.Click += label1_Click;
-            // 
-            // tabPage2
-            // 
-            tabPage2.Controls.Add(label7);
-            tabPage2.Controls.Add(label6);
-            tabPage2.Controls.Add(buttonWriteEngTranslatedToFile);
-            tabPage2.Controls.Add(buttonreadEngTranslatedFromFile);
-            tabPage2.Controls.Add(label5);
-            tabPage2.Controls.Add(GetRusWordsButton);
-            tabPage2.Controls.Add(label4);
-            tabPage2.Controls.Add(SetEngTextFileButton);
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(588, 331);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Добавление перевода";
-            tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(35, 234);
-            label7.Name = "label7";
-            label7.Size = new Size(204, 15);
-            label7.TabIndex = 7;
-            label7.Text = "Сохранить файл оригинал-перевод";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(35, 159);
-            label6.Name = "label6";
-            label6.Size = new Size(246, 15);
-            label6.TabIndex = 6;
-            label6.Text = "загрузить готовый файл оригинал-перевод";
-            // 
-            // buttonWriteEngTranslatedToFile
-            // 
-            buttonWriteEngTranslatedToFile.Location = new Point(33, 262);
-            buttonWriteEngTranslatedToFile.Name = "buttonWriteEngTranslatedToFile";
-            buttonWriteEngTranslatedToFile.Size = new Size(75, 23);
-            buttonWriteEngTranslatedToFile.TabIndex = 5;
-            buttonWriteEngTranslatedToFile.Text = "button2";
-            buttonWriteEngTranslatedToFile.UseVisualStyleBackColor = true;
-            buttonWriteEngTranslatedToFile.Click += buttonWriteEngTranslatedToFile_Click;
-            // 
-            // buttonreadEngTranslatedFromFile
-            // 
-            buttonreadEngTranslatedFromFile.Location = new Point(33, 192);
-            buttonreadEngTranslatedFromFile.Name = "buttonreadEngTranslatedFromFile";
-            buttonreadEngTranslatedFromFile.Size = new Size(75, 23);
-            buttonreadEngTranslatedFromFile.TabIndex = 4;
-            buttonreadEngTranslatedFromFile.Text = "button1";
-            buttonreadEngTranslatedFromFile.UseVisualStyleBackColor = true;
-            buttonreadEngTranslatedFromFile.Click += buttonreadEngTranslatedFromFile_Click;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(33, 93);
-            label5.Name = "label5";
-            label5.Size = new Size(203, 15);
-            label5.TabIndex = 3;
-            label5.Text = "Загрузить файл с русским перевом";
-            // 
-            // GetRusWordsButton
-            // 
-            GetRusWordsButton.Location = new Point(33, 111);
-            GetRusWordsButton.Name = "GetRusWordsButton";
-            GetRusWordsButton.Size = new Size(75, 23);
-            GetRusWordsButton.TabIndex = 2;
-            GetRusWordsButton.Text = "button1";
-            GetRusWordsButton.UseVisualStyleBackColor = true;
-            GetRusWordsButton.Click += GetRusWordsButton_Click;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(33, 21);
-            label4.Name = "label4";
-            label4.Size = new Size(217, 15);
-            label4.TabIndex = 1;
-            label4.Text = "Указать файл с английскими словами";
-            // 
-            // SetEngTextFileButton
-            // 
-            SetEngTextFileButton.Location = new Point(33, 39);
-            SetEngTextFileButton.Name = "SetEngTextFileButton";
-            SetEngTextFileButton.Size = new Size(75, 23);
-            SetEngTextFileButton.TabIndex = 0;
-            SetEngTextFileButton.Text = "button1";
-            SetEngTextFileButton.UseVisualStyleBackColor = true;
-            SetEngTextFileButton.Click += SetEngTextFileButton_Click;
+            saveAllWordsButton.Location = new Point(439, 280);
+            saveAllWordsButton.Name = "saveAllWordsButton";
+            saveAllWordsButton.Size = new Size(75, 23);
+            saveAllWordsButton.TabIndex = 8;
+            saveAllWordsButton.Text = "Сохранить";
+            saveAllWordsButton.UseVisualStyleBackColor = true;
+            saveAllWordsButton.Click += saveAllWordsButton_Click;
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(saveAllWordsButton);
+            tabPage3.Controls.Add(knownWordsCountLabel);
+            tabPage3.Controls.Add(filmsComboBox);
             tabPage3.Controls.Add(buttonToLastUnknown);
             tabPage3.Controls.Add(labelCurrentIndex);
             tabPage3.Controls.Add(checkBoxShowOnlyUnknownWords);
@@ -267,14 +94,67 @@
             tabPage3.Text = "tabPage3";
             tabPage3.UseVisualStyleBackColor = true;
             // 
-            // labelCurrentIndex
+            // labelEngWord
             // 
-            labelCurrentIndex.AutoSize = true;
-            labelCurrentIndex.Location = new Point(65, 143);
-            labelCurrentIndex.Name = "labelCurrentIndex";
-            labelCurrentIndex.Size = new Size(24, 15);
-            labelCurrentIndex.TabIndex = 6;
-            labelCurrentIndex.Text = "0/0";
+            labelEngWord.AutoSize = true;
+            labelEngWord.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            labelEngWord.Location = new Point(65, 39);
+            labelEngWord.Name = "labelEngWord";
+            labelEngWord.Size = new Size(92, 25);
+            labelEngWord.TabIndex = 0;
+            labelEngWord.Text = "Оригинал";
+            labelEngWord.Click += labelEngWord_Click;
+            // 
+            // labelTranslatedWord
+            // 
+            labelTranslatedWord.AutoSize = true;
+            labelTranslatedWord.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            labelTranslatedWord.Location = new Point(65, 77);
+            labelTranslatedWord.Name = "labelTranslatedWord";
+            labelTranslatedWord.Size = new Size(85, 25);
+            labelTranslatedWord.TabIndex = 1;
+            labelTranslatedWord.Text = "Перевод";
+            labelTranslatedWord.MouseMove += labelTranslatedWord_MouseMove;
+            // 
+            // labelCountInText
+            // 
+            labelCountInText.AutoSize = true;
+            labelCountInText.Location = new Point(65, 113);
+            labelCountInText.Name = "labelCountInText";
+            labelCountInText.Size = new Size(46, 15);
+            labelCountInText.TabIndex = 2;
+            labelCountInText.Text = "Кол-во";
+            // 
+            // buttonPrevWord
+            // 
+            buttonPrevWord.Location = new Point(78, 219);
+            buttonPrevWord.Name = "buttonPrevWord";
+            buttonPrevWord.Size = new Size(75, 23);
+            buttonPrevWord.TabIndex = 3;
+            buttonPrevWord.Text = "Назад";
+            buttonPrevWord.UseVisualStyleBackColor = true;
+            buttonPrevWord.Click += buttonPrevWord_Click;
+            // 
+            // buttonNextWord
+            // 
+            buttonNextWord.Location = new Point(199, 219);
+            buttonNextWord.Name = "buttonNextWord";
+            buttonNextWord.Size = new Size(75, 23);
+            buttonNextWord.TabIndex = 4;
+            buttonNextWord.Text = "Вперед";
+            buttonNextWord.UseVisualStyleBackColor = true;
+            buttonNextWord.Click += buttonNextWord_Click;
+            // 
+            // checkBoxIsKnownWord
+            // 
+            checkBoxIsKnownWord.AutoSize = true;
+            checkBoxIsKnownWord.Location = new Point(65, 178);
+            checkBoxIsKnownWord.Name = "checkBoxIsKnownWord";
+            checkBoxIsKnownWord.Size = new Size(92, 19);
+            checkBoxIsKnownWord.TabIndex = 5;
+            checkBoxIsKnownWord.Text = "Знаю слово";
+            checkBoxIsKnownWord.UseVisualStyleBackColor = true;
+            checkBoxIsKnownWord.CheckedChanged += checkBoxIsKnownWord_CheckedChanged;
             // 
             // checkBoxShowOnlyUnknownWords
             // 
@@ -289,63 +169,14 @@
             checkBoxShowOnlyUnknownWords.UseVisualStyleBackColor = true;
             checkBoxShowOnlyUnknownWords.Click += checkBoxShowOnlyUnknownWords_Click;
             // 
-            // checkBoxIsKnownWord
+            // labelCurrentIndex
             // 
-            checkBoxIsKnownWord.AutoSize = true;
-            checkBoxIsKnownWord.Location = new Point(65, 178);
-            checkBoxIsKnownWord.Name = "checkBoxIsKnownWord";
-            checkBoxIsKnownWord.Size = new Size(92, 19);
-            checkBoxIsKnownWord.TabIndex = 5;
-            checkBoxIsKnownWord.Text = "Знаю слово";
-            checkBoxIsKnownWord.UseVisualStyleBackColor = true;
-            checkBoxIsKnownWord.Click += checkBoxIsKnownWord_CheckedChanged;
-            // 
-            // buttonNextWord
-            // 
-            buttonNextWord.Location = new Point(199, 219);
-            buttonNextWord.Name = "buttonNextWord";
-            buttonNextWord.Size = new Size(75, 23);
-            buttonNextWord.TabIndex = 4;
-            buttonNextWord.Text = "Вперед";
-            buttonNextWord.UseVisualStyleBackColor = true;
-            buttonNextWord.Click += buttonNextWord_Click;
-            // 
-            // buttonPrevWord
-            // 
-            buttonPrevWord.Location = new Point(78, 219);
-            buttonPrevWord.Name = "buttonPrevWord";
-            buttonPrevWord.Size = new Size(75, 23);
-            buttonPrevWord.TabIndex = 3;
-            buttonPrevWord.Text = "Назад";
-            buttonPrevWord.UseVisualStyleBackColor = true;
-            buttonPrevWord.Click += buttonPrevWord_Click;
-            // 
-            // labelCountInText
-            // 
-            labelCountInText.AutoSize = true;
-            labelCountInText.Location = new Point(65, 113);
-            labelCountInText.Name = "labelCountInText";
-            labelCountInText.Size = new Size(46, 15);
-            labelCountInText.TabIndex = 2;
-            labelCountInText.Text = "Кол-во";
-            // 
-            // labelTranslatedWord
-            // 
-            labelTranslatedWord.AutoSize = true;
-            labelTranslatedWord.Location = new Point(65, 77);
-            labelTranslatedWord.Name = "labelTranslatedWord";
-            labelTranslatedWord.Size = new Size(54, 15);
-            labelTranslatedWord.TabIndex = 1;
-            labelTranslatedWord.Text = "Перевод";
-            // 
-            // labelEngWord
-            // 
-            labelEngWord.AutoSize = true;
-            labelEngWord.Location = new Point(65, 39);
-            labelEngWord.Name = "labelEngWord";
-            labelEngWord.Size = new Size(62, 15);
-            labelEngWord.TabIndex = 0;
-            labelEngWord.Text = "Оригинал";
+            labelCurrentIndex.AutoSize = true;
+            labelCurrentIndex.Location = new Point(65, 143);
+            labelCurrentIndex.Name = "labelCurrentIndex";
+            labelCurrentIndex.Size = new Size(24, 15);
+            labelCurrentIndex.TabIndex = 6;
+            labelCurrentIndex.Text = "0/0";
             // 
             // buttonToLastUnknown
             // 
@@ -357,6 +188,132 @@
             buttonToLastUnknown.UseVisualStyleBackColor = true;
             buttonToLastUnknown.Click += buttonToLastUnknown_Click;
             // 
+            // filmsComboBox
+            // 
+            filmsComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            filmsComboBox.ImeMode = ImeMode.NoControl;
+            filmsComboBox.Items.AddRange(new object[] { "gfd", "gdf" });
+            filmsComboBox.Location = new Point(65, 6);
+            filmsComboBox.Name = "filmsComboBox";
+            filmsComboBox.Size = new Size(121, 23);
+            filmsComboBox.TabIndex = 8;
+            filmsComboBox.SelectionChangeCommitted += filmsComboBox_SelectionChangeCommitted;
+            // 
+            // knownWordsCountLabel
+            // 
+            knownWordsCountLabel.AutoSize = true;
+            knownWordsCountLabel.Location = new Point(63, 302);
+            knownWordsCountLabel.Name = "knownWordsCountLabel";
+            knownWordsCountLabel.Size = new Size(106, 15);
+            knownWordsCountLabel.TabIndex = 9;
+            knownWordsCountLabel.Text = "Слов изучено: 0/0";
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(label9);
+            tabPage1.Controls.Add(addNewWordsButton);
+            tabPage1.Controls.Add(label8);
+            tabPage1.Controls.Add(WordsInFileNameTextBox);
+            tabPage1.Controls.Add(label3);
+            tabPage1.Controls.Add(saveFileOnlyEngWordsButton);
+            tabPage1.Controls.Add(label1);
+            tabPage1.Controls.Add(openFileButton);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(588, 331);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Парсинг исходника";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // openFileButton
+            // 
+            openFileButton.Location = new Point(29, 38);
+            openFileButton.Name = "openFileButton";
+            openFileButton.Size = new Size(75, 23);
+            openFileButton.TabIndex = 0;
+            openFileButton.Text = "button1";
+            openFileButton.UseVisualStyleBackColor = true;
+            openFileButton.Click += openFileButton_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(29, 20);
+            label1.Name = "label1";
+            label1.Size = new Size(153, 15);
+            label1.TabIndex = 1;
+            label1.Text = "Парсинг исходного файла";
+            label1.Click += label1_Click;
+            // 
+            // saveFileOnlyEngWordsButton
+            // 
+            saveFileOnlyEngWordsButton.Location = new Point(29, 117);
+            saveFileOnlyEngWordsButton.Name = "saveFileOnlyEngWordsButton";
+            saveFileOnlyEngWordsButton.Size = new Size(75, 23);
+            saveFileOnlyEngWordsButton.TabIndex = 4;
+            saveFileOnlyEngWordsButton.Text = "button1";
+            saveFileOnlyEngWordsButton.UseVisualStyleBackColor = true;
+            saveFileOnlyEngWordsButton.Click += saveFileOnlyEngWordsButton_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(29, 99);
+            label3.Name = "label3";
+            label3.Size = new Size(211, 15);
+            label3.TabIndex = 5;
+            label3.Text = "Генерация файла только со словами";
+            // 
+            // WordsInFileNameTextBox
+            // 
+            WordsInFileNameTextBox.Location = new Point(29, 221);
+            WordsInFileNameTextBox.Name = "WordsInFileNameTextBox";
+            WordsInFileNameTextBox.Size = new Size(100, 23);
+            WordsInFileNameTextBox.TabIndex = 6;
+            WordsInFileNameTextBox.TextChanged += WordsInFileNameTextBox_TextChanged;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(29, 203);
+            label8.Name = "label8";
+            label8.Size = new Size(165, 15);
+            label8.TabIndex = 7;
+            label8.Text = "Название файла сохоанения";
+            // 
+            // addNewWordsButton
+            // 
+            addNewWordsButton.Enabled = false;
+            addNewWordsButton.Location = new Point(29, 273);
+            addNewWordsButton.Name = "addNewWordsButton";
+            addNewWordsButton.Size = new Size(75, 23);
+            addNewWordsButton.TabIndex = 8;
+            addNewWordsButton.Text = "button1";
+            addNewWordsButton.UseVisualStyleBackColor = true;
+            addNewWordsButton.Click += addNewWordsButton_Click;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(29, 255);
+            label9.Name = "label9";
+            label9.Size = new Size(128, 15);
+            label9.TabIndex = 9;
+            label9.Text = "Добавление перевода";
+            // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage3);
+            tabControl1.Location = new Point(100, 42);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(596, 359);
+            tabControl1.TabIndex = 1;
+            tabControl1.KeyDown += Form1_KeyDown;
+            tabControl1.KeyUp += Form1_KeyUp;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -365,46 +322,39 @@
             Controls.Add(tabControl1);
             Name = "Form1";
             Text = "Form1";
-            tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
-            tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            tabControl1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button openFileButton;
         private OpenFileDialog openFileDialog;
-        private TabControl tabControl1;
-        private TabPage tabPage1;
-        private Label label1;
-        private TabPage tabPage2;
-        private Label label2;
-        private Button createFileEngWordsButton;
         private SaveFileDialog saveFileDialog;
-        private Label label3;
-        private Button saveFileOnlyEngWordsButton;
-        private Label label4;
-        private Button SetEngTextFileButton;
-        private Button GetRusWordsButton;
-        private Label label5;
+        private Button saveAllWordsButton;
         private TabPage tabPage3;
+        private Label knownWordsCountLabel;
+        private ComboBox filmsComboBox;
+        private Button buttonToLastUnknown;
+        private Label labelCurrentIndex;
+        private CheckBox checkBoxShowOnlyUnknownWords;
+        private CheckBox checkBoxIsKnownWord;
         private Button buttonNextWord;
         private Button buttonPrevWord;
         private Label labelCountInText;
         private Label labelTranslatedWord;
         private Label labelEngWord;
-        private Label label7;
-        private Label label6;
-        private Button buttonWriteEngTranslatedToFile;
-        private Button buttonreadEngTranslatedFromFile;
-        private CheckBox checkBoxIsKnownWord;
-        private CheckBox checkBoxShowOnlyUnknownWords;
-        private Label labelCurrentIndex;
-        private Button buttonToLastUnknown;
+        private TabPage tabPage1;
+        private Label label9;
+        private Button addNewWordsButton;
+        private Label label8;
+        private TextBox WordsInFileNameTextBox;
+        private Label label3;
+        private Button saveFileOnlyEngWordsButton;
+        private Label label1;
+        private Button openFileButton;
+        private TabControl tabControl1;
     }
 }

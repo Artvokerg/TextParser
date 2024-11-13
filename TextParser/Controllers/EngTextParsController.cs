@@ -1,63 +1,159 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.IO;
+using System.Text.RegularExpressions;
 using TextParser.DAO;
+using TextParser.Models;
 
 namespace TextParser.Controllers
 {
     internal class EngTextParsController
     {
-        private FileController m_fileController;
-        private IEngWordsDao m_engWordsDao;
+        private WordsController m_wordsController;
+        private WordsInFileController m_wordsInFileController;
 
-        public EngTextParsController(FileController fileController, IEngWordsDao engWordsDao)
+        private Dictionary<string, int> m_wordsInFile;
+        private List<string> m_unstoragedWordsToBeGetFromAllWords;
+        private List<string> m_unstoragedWordsToBeTranslated;
+        Dictionary<string, string> m_allEngWords;
+
+        private const string ALL_ENG_WORDS_FILE_PATH = @"words_data\all_eng_words.txt";
+
+
+
+        public EngTextParsController(WordsController wordsController, WordsInFileController wordsInFileController)
         {
-            m_fileController = fileController;
-            m_engWordsDao = engWordsDao;
+            m_wordsController = wordsController;
+            m_wordsInFileController = wordsInFileController;
+            m_allEngWords = GetAllWords();
         }
-
-        public void GenerateFileEngWordsAndCount(string path)
-        {
-            var lines = m_engWordsDao.GetEngWordsOrderByCountInText()
-                .Select((word) => word.Word + ";" + word.CountInText.ToString());
-
-            m_fileController.WriteLinesToFile(path, lines);
-        }
-
         public void GenerateFileOnlyEngWords(string path)
         {
-            var lines = m_engWordsDao.GetEngWordsOrderByCountInText()
-                .Select((word) => word.Word);
-
-            m_fileController.WriteLinesToFile(path, lines);
+            FileController.WriteLinesToFile(path, m_unstoragedWordsToBeTranslated);
         }
 
         public void ReadFileAndSetEngWordsToModel(string path)
         {
-            var allLines = m_fileController.GetAllLinesFromFile(path);
-            Dictionary<string, int> engWords = ParseEngWords(allLines);
-            m_engWordsDao.SetEngWords(engWords);
+            var lines = FileController.GetAllLinesFromFile(path);
+            m_wordsInFile = ParseEngWords(lines);
+            InitUnstoragedWords();
         }
 
-        public void ReadGeneratedFileAndSetEngWordsToModel(string path)
+        private void InitUnstoragedWords()
         {
-            IEnumerable<string> allLines = m_fileController.GetAllLinesFromFile(path);
+            List<string> engWordsInFile = m_wordsInFile.Keys.ToList();
 
-            HashSet<EngWord> engWords = new HashSet<EngWord>();
-            foreach (string line in allLines)
+            m_unstoragedWordsToBeTranslated = m_wordsController.GetUnstoragedWords(engWordsInFile)
+                                                               .Where(x => !AllWordsContains(x))
+                                                               .ToList();
+
+            m_unstoragedWordsToBeGetFromAllWords = m_wordsController.GetUnstoragedWords(engWordsInFile)
+                                                               .Where(x => AllWordsContains(x))
+                                                               .ToList();
+        }
+
+        private bool AllWordsContains(string word)
+        {
+            return AllWordsTryGetValue(word, out _);
+        }
+        private bool AllWordsTryGetValue(string engWord, out string rusWord)
+        {
+            if (m_allEngWords.TryGetValue(engWord, out rusWord) ||
+                m_allEngWords.TryGetValue(engWord.Substring(0, engWord.Length - 1), out rusWord))
             {
-                EngWord engWord = new EngWord();
-
-                engWord.Word = line.Split(";")[0];
-                engWord.CountInText = int.Parse(line.Split(";")[1]);
-
-                engWords.Add(engWord);
+                rusWord = rusWord.Replace('|', '/')
+                                 .Replace('\t', ' ');
+                return true;
             }
 
-            m_engWordsDao.SetEngWords(engWords);
+            return false;
         }
 
-        public HashSet<EngWord> GetAllEngWords()
+        private string AllWordsGetValue(string engWord)
         {
-            return m_engWordsDao.GetEngWords();
+            if (AllWordsTryGetValue(engWord, out string rusWord))
+            {
+                return rusWord;
+            }
+
+            throw new Exception("Can`t get value from Dictionary");
+        }
+
+        public void SetRusWordsFromFile(string path, string pathToNewWordsInFile)
+        {            
+            List<WordInFile> wordsInFile = new List<WordInFile>();
+            Dictionary<string, string> allEngWords = GetAllWords();
+
+            List<string> wordsWithPostfix = new List<string>();
+            List<string> unfindedWords = new List<string>();
+
+
+            foreach (string unstorageWord in m_unstoragedWordsToBeGetFromAllWords)
+            {
+                Word word = new Word();
+
+                word.EngWord = unstorageWord;
+
+                string rusWord = AllWordsGetValue(unstorageWord);
+
+                word.RusWord = rusWord;
+
+                word.IsKnown = false;
+
+                WordInFile wordInFile = new WordInFile();
+                wordInFile.Word = word;
+                wordInFile.CountInFile = m_wordsInFile[word.EngWord];
+
+                m_wordsController.AddWord(word);
+                wordsInFile.Add(wordInFile);
+            }
+
+            var lines = FileController.GetAllLinesFromFile(path);
+
+            for (int i = 0; i < lines.Count(); i++)
+            {
+                Word word = new Word();
+
+                word.EngWord = m_unstoragedWordsToBeTranslated.ElementAt(i);
+                word.RusWord = lines.ElementAt(i);
+                word.IsKnown = false;
+
+                WordInFile wordInFile = new WordInFile();
+                wordInFile.Word = word;
+                wordInFile.CountInFile = m_wordsInFile[word.EngWord];
+
+                m_wordsController.AddWord(word);
+                wordsInFile.Add(wordInFile);
+            }
+
+            foreach(KeyValuePair<string, int> allWordInFile in m_wordsInFile)
+            {
+                if (!wordsInFile.Any(word => word.Word.EngWord == allWordInFile.Key))
+                {
+                    WordInFile wordInFile = new WordInFile();
+                    wordInFile.Word = m_wordsController.GetWord(allWordInFile.Key);
+                    wordInFile.CountInFile = allWordInFile.Value;
+
+                    wordsInFile.Add(wordInFile);
+                }
+            }
+
+
+
+            m_wordsController.SaveToFile();
+            m_wordsInFileController.SetNewWordsInFile(wordsInFile, pathToNewWordsInFile);
+
+        }
+
+        private Dictionary<string, string> GetAllWords()
+        {
+            Dictionary<string, string> allWords = new Dictionary<string, string>();
+            List<string> lines = FileController.GetAllLinesFromFile(ALL_ENG_WORDS_FILE_PATH).ToList();
+
+            for (int i = 0; i < lines.Count(); i += 2)
+            {
+                allWords.Add(lines.ElementAt(i), lines.ElementAt(i + 1));
+            }
+
+            return allWords;
         }
 
         private Dictionary<string, int> ParseEngWords(IEnumerable<string> lines)

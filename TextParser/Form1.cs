@@ -7,23 +7,26 @@ namespace TextParser
     public partial class Form1 : Form
     {
         private EngTextParsController m_engTextParsController;
-        private EngTranslatedPairsController m_engTranslatedPairsController;
         private ShowWordsMediator m_showWordsMediator;
+        private WordsController m_wordsController;
+        private WordsInFileController m_wordsInFileController;
 
         public Form1()
         {
             InitializeComponent();
 
-            FileController fileController = new FileController();
-            IEngWordsDao engWordsDao = new EngWordsDao();
-            IEngTranslatedPairsDao engTranslatedPairsDao = new EngTranslatedPairsDao();
+            m_wordsController = new WordsController();
+            m_wordsInFileController = new WordsInFileController(m_wordsController);
 
-            m_engTextParsController = new EngTextParsController(fileController, engWordsDao);
-            m_engTranslatedPairsController = new EngTranslatedPairsController(fileController, engTranslatedPairsDao, engWordsDao);
-            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_engTranslatedPairsController, checkBoxIsKnownWord, labelCurrentIndex, saveFileOnlyEngWordsButton, createFileEngWordsButton);
+            m_engTextParsController = new EngTextParsController(m_wordsController, m_wordsInFileController);
+            m_showWordsMediator = new ShowWordsMediator(labelCountInText, labelTranslatedWord, labelEngWord, m_wordsInFileController, checkBoxIsKnownWord, labelCurrentIndex, saveFileOnlyEngWordsButton, knownWordsCountLabel, m_wordsController);
 
-            createFileEngWordsButton.Enabled = false;
             saveFileOnlyEngWordsButton.Enabled = false;
+
+
+            string[] fileNames = m_wordsInFileController.GetFileNames();
+            filmsComboBox.Items.Clear();
+            filmsComboBox.Items.AddRange(fileNames);
         }
 
         private void openFileButton_Click(object sender, EventArgs e)
@@ -44,12 +47,6 @@ namespace TextParser
 
         private void createFileEngWordsButton_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
-            {
-                return;
-            }
-
-            m_engTextParsController.GenerateFileEngWordsAndCount(saveFileDialog.FileName);
         }
 
         private void saveFileOnlyEngWordsButton_Click(object sender, EventArgs e)
@@ -64,22 +61,10 @@ namespace TextParser
 
         private void SetEngTextFileButton_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
-            {
-                return;
-            }
-
-            m_engTextParsController.ReadGeneratedFileAndSetEngWordsToModel(openFileDialog.FileName);
         }
 
         private void GetRusWordsButton_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
-            {
-                return;
-            }
-
-            m_engTranslatedPairsController.GetOnlyTranslatedWordsFromFile(openFileDialog.FileName);
         }
 
         private void buttonPrevWord_Click(object sender, EventArgs e)
@@ -94,22 +79,11 @@ namespace TextParser
 
         private void buttonreadEngTranslatedFromFile_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
-            {
-                return;
-            }
 
-            m_engTranslatedPairsController.ReadEngTranslatedPairsFromFile(openFileDialog.FileName);
         }
 
         private void buttonWriteEngTranslatedToFile_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
-            {
-                return;
-            }
-
-            m_engTranslatedPairsController.WriteEngTranslatedPairsToFile(saveFileDialog.FileName);
         }
 
         private void checkBoxIsKnownWord_CheckedChanged(object sender, EventArgs e)
@@ -129,12 +103,56 @@ namespace TextParser
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            m_showWordsMediator.KeyUp(e.KeyData);
+            if (tabControl1.SelectedIndex == 2)
+            {
+                m_showWordsMediator.KeyUp(e.KeyData);
+
+            }
         }
 
         private void buttonToLastUnknown_Click(object sender, EventArgs e)
         {
             m_showWordsMediator.ShowLastUnknownWord();
+        }
+
+        private void filmsComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            int nameFileIndex = filmsComboBox.SelectedIndex;
+            m_wordsInFileController.ReadWordsInFile(nameFileIndex);
+            m_showWordsMediator.SetStartPosition();
+        }
+
+        private void labelTranslatedWord_MouseMove(object sender, MouseEventArgs e)
+        {
+            m_showWordsMediator.RemoveSpoiler();
+        }
+
+        private void saveAllWordsButton_Click(object sender, EventArgs e)
+        {
+            m_wordsController.SaveToFile();
+        }
+
+        private void WordsInFileNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            addNewWordsButton.Enabled = !String.IsNullOrEmpty(WordsInFileNameTextBox.Text);
+        }
+
+        private void addNewWordsButton_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            m_engTextParsController.SetRusWordsFromFile(openFileDialog.FileName, WordsInFileNameTextBox.Text);
+        }
+
+        private void labelEngWord_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(labelEngWord.Text))
+            {
+                Clipboard.SetText(labelEngWord.Text);
+            }
         }
     }
 }
