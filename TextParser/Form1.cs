@@ -103,7 +103,7 @@ namespace TextParser
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (tabControl1.SelectedIndex == 2)
+            if (tabControl1.SelectedIndex == 1)
             {
                 m_showWordsMediator.KeyUp(e.KeyData);
 
