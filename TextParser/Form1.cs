@@ -139,6 +139,12 @@ namespace TextParser
 
         private void addNewWordsButton_Click(object sender, EventArgs e)
         {
+            if (!m_engTextParsController.HaveUnstoragedWords())
+            {
+                m_engTextParsController.SaveUnstoragedWordsInFile(WordsInFileNameTextBox.Text);
+                return;
+            }
+
             if (openFileDialog.ShowDialog() == DialogResult.Cancel)
             {
                 return;

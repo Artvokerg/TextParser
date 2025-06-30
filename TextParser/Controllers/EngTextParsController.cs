@@ -77,6 +77,11 @@ namespace TextParser.Controllers
             throw new Exception("Can`t get value from Dictionary");
         }
 
+        public bool HaveUnstoragedWords()
+        {
+            return m_unstoragedWordsToBeGetFromAllWords.Count + m_unstoragedWordsToBeTranslated.Count > 0;
+        }
+
         public void SetRusWordsFromFile(string path, string pathToNewWordsInFile)
         {            
             List<WordInFile> wordsInFile = new List<WordInFile>();
@@ -141,6 +146,25 @@ namespace TextParser.Controllers
             m_wordsController.SaveToFile();
             m_wordsInFileController.SetNewWordsInFile(wordsInFile, pathToNewWordsInFile);
 
+        }
+
+        public void SaveUnstoragedWordsInFile(string pathToNewWordsInFile)
+        {
+            List<WordInFile> wordsInFile = new List<WordInFile>();
+
+            foreach (KeyValuePair<string, int> allWordInFile in m_wordsInFile)
+            {
+                if (!wordsInFile.Any(word => word.Word.EngWord == allWordInFile.Key))
+                {
+                    WordInFile wordInFile = new WordInFile();
+                    wordInFile.Word = m_wordsController.GetWord(allWordInFile.Key);
+                    wordInFile.CountInFile = allWordInFile.Value;
+
+                    wordsInFile.Add(wordInFile);
+                }
+            }
+
+            m_wordsInFileController.SetNewWordsInFile(wordsInFile, pathToNewWordsInFile);
         }
 
         private Dictionary<string, string> GetAllWords()
